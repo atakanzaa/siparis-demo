@@ -1,24 +1,21 @@
-package entity;
+package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
-
-public class Order {
+public class Order_Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long orderId;
+    private Long orderItemId;
 
-    @Column(name = "order_date", nullable = false)
-    private LocalDateTime orderDate;
-
-    @Column(nullable = false, length = 50)
-    private String status;
+    @Column(nullable = false)
+    private Integer quantity;
 
     @Column(nullable = false, precision = 10, scale = 2)
-    private Double totalAmount;
+    private Double price;
 
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
 }
