@@ -1,4 +1,4 @@
-package entity;
+package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
