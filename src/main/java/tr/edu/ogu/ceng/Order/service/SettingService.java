@@ -13,7 +13,6 @@ public class SettingService {
     private final SettingRepository settingRepository;
 
     public  Object getSetting(Long id) {
-
         return settingRepository.getReferenceById(id);
     }
 

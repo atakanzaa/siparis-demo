@@ -2,6 +2,7 @@ package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

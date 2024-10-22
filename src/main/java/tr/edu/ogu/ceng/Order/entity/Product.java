@@ -2,6 +2,7 @@ package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,7 +14,7 @@ public class Product {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    @Column(nullable = false, precision = 10, scale = 2)
+    @Column(nullable = false)
     private Double price;
 
     @Column(nullable = false)
