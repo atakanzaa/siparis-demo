@@ -1,7 +1,11 @@
 package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+@Getter
+@Setter
 @Entity
 public class Payment {
     @Id
@@ -25,4 +29,43 @@ public class Payment {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @Column(name = "deleted_by")
+    private String deletedBy;
+
+    @Column(name = "version")
+    private Integer version;
+
+    public void setAmount(double v) {
+        amount = v;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setOrderId(long l) {
+        paymentId = l;
+    }
+
+    public long getOrderId() {
+        return paymentId;
+    }
+
+    public void setPaymentTimestamp(LocalDateTime now) {
+        paymentDate = now;
+    }
+
+    public Object getPaymentTimestamp() {
+        return paymentDate;
+    }
 }

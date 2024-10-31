@@ -1,7 +1,11 @@
 package tr.edu.ogu.ceng.Order.entity;
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
 
+import java.time.LocalDateTime;
+@Getter
+@Setter
 @Entity
 public class Product {
     @Id
@@ -26,4 +30,25 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    @Column(name = "created_by")
+    private String createdBy;
+
+    @Column(name = "updated_by")
+    private String updatedBy;
+
+    @Column(name = "deleted_by")
+    private String deletedBy;
+
+    @Column(name = "version")
+    private Integer version;
+
+    public void setName(String laptop) {
+        this.name = laptop;
+    }
+    public String getName() {
+        return name;
+    }
 }

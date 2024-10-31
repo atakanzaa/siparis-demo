@@ -7,7 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
 @Data
 @Table(name = "settings")
@@ -24,4 +28,11 @@ public class Setting {
     private String value;
 
 
+    public void setSettingId(long l) {
+        id  =l;
+    }
+
+    public long getSettingId() {
+        return id;
+    }
 }
