@@ -8,13 +8,13 @@ spring:
     locations: classpath:db/migrations
     user: postgres
 microservices:
-  payment: http://localhost:8003
-  order: http://localhost:8001
-  inventory: http://localhost:8002
-  shipping: http://localhost:8004
-  gateway: http://localhost:8005
-  bill: http://localhost:8006
-  notification: http://localhost:8007
-  product: http://localhost:8008
-  cargo: http://localhost:8009
-  shoppingcart: http://localhost:8010
+  services:
+    gateway: http://localhost:8001       # Gateway Servisi
+    product: http://localhost:8002       # Ürün Servisi
+    order: http://localhost:8003         # Sipariş Servisi
+    notification: http://localhost:8004   # Bildirim Servisi
+    cart: http://localhost:8005          # Alışveriş Sepeti Servisi
+    payment: http://localhost:8006       # Ödeme Servisi
+    user: http://localhost:8007          # Kullanıcı Servisi
+    invoice: http://localhost:8008       # Fatura Servisi
+    shipment: http://localhost:8011     #kargo servisi

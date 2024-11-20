@@ -45,10 +45,5 @@ public class Product {
     @Column(name = "version")
     private Integer version;
 
-    public void setName(String laptop) {
-        this.name = laptop;
-    }
-    public String getName() {
-        return name;
-    }
+
 }
