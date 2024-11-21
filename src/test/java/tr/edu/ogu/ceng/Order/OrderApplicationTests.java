@@ -7,22 +7,15 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.stereotype.Service;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 import tr.edu.ogu.ceng.Order.entity.*;
 import tr.edu.ogu.ceng.Order.repository.CustomerRepository;
-import tr.edu.ogu.ceng.Order.repository.ProductRepository;
-import tr.edu.ogu.ceng.Order.service.CustomerService;
-import tr.edu.ogu.ceng.Order.service.OrderService;
-import tr.edu.ogu.ceng.Order.service.SettingService;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 @RunWith(Enclosed.class)
 @SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT)
