@@ -1,4 +1,4 @@
-package tr.edu.ogu.ceng.Order;
+package tr.edu.ogu.ceng.Order.RepositoryTest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,6 @@ import org.testcontainers.utility.DockerImageName;
 import tr.edu.ogu.ceng.Order.entity.Setting;
 import tr.edu.ogu.ceng.Order.repository.SettingRepository;
 
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

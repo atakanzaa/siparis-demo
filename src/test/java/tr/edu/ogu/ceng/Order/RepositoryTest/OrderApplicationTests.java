@@ -1,4 +1,4 @@
-package tr.edu.ogu.ceng.Order;
+package tr.edu.ogu.ceng.Order.RepositoryTest;
 
 import org.junit.experimental.runners.Enclosed;
 import org.junit.jupiter.api.BeforeEach;
