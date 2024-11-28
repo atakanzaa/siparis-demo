@@ -8,6 +8,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.utility.DockerImageName;
+import tr.edu.ogu.ceng.Order.AbstractContainerBaseTest;
 import tr.edu.ogu.ceng.Order.Service.PaymentService;
 import tr.edu.ogu.ceng.Order.entity.Payment;
 import tr.edu.ogu.ceng.Order.repository.PaymentRepository;
@@ -18,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class PaymentServiceTest {
+public class PaymentServiceTest  extends AbstractContainerBaseTest {
 
     @MockBean
     private PaymentRepository paymentRepository; // Mock'lanan PaymentRepository

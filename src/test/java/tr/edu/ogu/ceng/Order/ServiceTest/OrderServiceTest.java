@@ -8,6 +8,12 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.DynamicPropertyRegistry;
+import org.springframework.test.context.DynamicPropertySource;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.utility.DockerImageName;
+import tr.edu.ogu.ceng.Order.AbstractContainerBaseTest;
 import tr.edu.ogu.ceng.Order.Service.OrderService;
 import tr.edu.ogu.ceng.Order.entity.Order;
 import tr.edu.ogu.ceng.Order.repository.OrderRepository;
@@ -20,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
-public class OrderServiceTest {
+public class OrderServiceTest extends AbstractContainerBaseTest {
 
     @Autowired
     private OrderService orderService;
