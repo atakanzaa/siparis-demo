@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 @Data
 public class CustomerDto {
     private Long customerId;
-    private String name;
+    private String username;
     private String email;
     private String phone;
     private LocalDateTime createdAt;

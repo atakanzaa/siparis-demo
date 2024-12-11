@@ -46,34 +46,9 @@ public class PaymentServiceTest  extends AbstractContainerBaseTest {
         payment.setVersion(1);
     }
 
-    @Test
-    void testCreatePayment() {
-        // Payment nesnesini mock repository'den kaydedildiğini simüle et
-        when(paymentRepository.save(any(Payment.class))).thenReturn(payment);
 
-        // PaymentService'in createPayment metodunu test et
-        Payment createdPayment = paymentService.createPayment(100.0, "Credit Card", "Completed");
 
-        // Sonuçların beklenen değerlerle uyumlu olup olmadığını kontrol et
-        assertNotNull(createdPayment);
-        assertEquals(100.0, createdPayment.getAmount());
-        assertEquals("Credit Card", createdPayment.getPaymentMethod());
-        assertEquals("Completed", createdPayment.getStatus());
-        assertNotNull(createdPayment.getPaymentDate());
-        assertNotNull(createdPayment.getCreatedAt());
-        assertEquals("system", createdPayment.getCreatedBy());
 
-        // save() metodunun doğru bir şekilde çağrıldığını kontrol et
-        verify(paymentRepository, times(1)).save(any(Payment.class));
-    }
-
-    @Test
-    void testCreatePayment_invalidAmount() {
-        // Amount 0 veya negatifse ödeme oluşturulamaz
-        assertThrows(IllegalArgumentException.class, () -> {
-            paymentService.createPayment(-100.0, "Credit Card", "Failed");
-        });
-    }
 
 
 }

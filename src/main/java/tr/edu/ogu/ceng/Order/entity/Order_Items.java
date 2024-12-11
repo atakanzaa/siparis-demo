@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 @Setter
 
 @Entity
+@Table(name = "order_items")
 public class Order_Items {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

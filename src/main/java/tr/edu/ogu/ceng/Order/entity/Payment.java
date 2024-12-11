@@ -7,42 +7,43 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "payments")
 public class Payment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;
 
-    @Column(name = "payment_date", nullable = false)
+    @Column(nullable = false)
     private LocalDateTime paymentDate;
 
     @Column(nullable = false)
     private Double amount;
 
-    @Column(name = "payment_method", nullable = false, length = 50)
+    @Column( nullable = false, length = 50)
     private String paymentMethod;
 
     @Column(nullable = false, length = 50)
     private String status;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column
     private LocalDateTime updatedAt;
 
-    @Column(name = "deleted_at")
+    @Column
     private LocalDateTime deletedAt;
 
-    @Column(name = "created_by")
+    @Column
     private String createdBy;
 
-    @Column(name = "updated_by")
+    @Column
     private String updatedBy;
 
-    @Column(name = "deleted_by")
+    @Column
     private String deletedBy;
 
-    @Column(name = "version")
+    @Column
     private Integer version;
 
     public void setAmount(double v) {

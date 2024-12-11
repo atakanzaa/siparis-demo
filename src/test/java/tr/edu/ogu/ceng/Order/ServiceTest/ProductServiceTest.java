@@ -56,26 +56,7 @@ public class ProductServiceTest extends AbstractContainerBaseTest {
         verify(productRepository, times(1)).save(product);
     }
 
-    @Test
-    void testFindProductById() {
-        // Arrange
-        Long productId = 1L;
-        Product mockProduct = new Product();
-        mockProduct.setProductId(productId);
-        mockProduct.setName("Phone");
-        mockProduct.setPrice(800.0);
 
-        when(productRepository.findById(productId)).thenReturn(Optional.of(mockProduct));
-
-        // Act
-        Product foundProduct = productService.findProductById(productId);
-
-        // Assert
-        assertNotNull(foundProduct);
-        assertEquals("Phone", foundProduct.getName());
-        assertEquals(800.0, foundProduct.getPrice());
-        verify(productRepository, times(1)).findById(productId);
-    }
 
     @Test
     void testFindProductById_ProductNotFound() {

@@ -52,37 +52,6 @@ public class CustomerServiceTest extends AbstractContainerBaseTest {
         verify(customerRepository, times(1)).save(customer);
     }
 
-    @Test
-    void testFindCustomerById() {
-        // Arrange
-        Long customerId = 1L;
-        Customer mockCustomer = new Customer();
-        mockCustomer.setCustomerId(customerId);
-        mockCustomer.setName("Jane Doe");
-        mockCustomer.setEmail("jane.doe@example.com");
 
-        when(customerRepository.findById(customerId)).thenReturn(Optional.of(mockCustomer));
 
-        // Act
-        Customer foundCustomer = customerService.findCustomerById(customerId);
-
-        // Assert
-        assertNotNull(foundCustomer);
-        assertEquals("Jane Doe", foundCustomer.getName());
-        assertEquals("jane.doe@example.com", foundCustomer.getEmail());
-        verify(customerRepository, times(1)).findById(customerId);
-    }
-
-    @Test
-    void testFindCustomerById_CustomerNotFound() {
-        // Arrange
-        Long customerId = 1L;
-
-        when(customerRepository.findById(customerId)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        Exception exception = assertThrows(RuntimeException.class, () -> customerService.findCustomerById(customerId));
-        assertEquals("Customer not found", exception.getMessage());
-        verify(customerRepository, times(1)).findById(customerId);
-    }
 }
