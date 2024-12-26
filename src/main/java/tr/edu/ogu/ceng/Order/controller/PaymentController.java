@@ -7,6 +7,8 @@ import tr.edu.ogu.ceng.Order.Service.PaymentService;
 import tr.edu.ogu.ceng.Order.dto.PaymentDto;
 import tr.edu.ogu.ceng.Order.entity.Payment;
 
+import java.util.Optional;
+
 @RequestMapping("/api/v1/payment")
 @RequiredArgsConstructor
 @RestController
@@ -15,20 +17,20 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PaymentDto> getPaymentById(@PathVariable Long id) {
-        PaymentDto payment = paymentService.getPaymentById(id);
+    public ResponseEntity<Optional<Payment>> getPaymentById(@PathVariable Long id) {
+        Optional<Payment> payment = paymentService.getPaymentById(id);
         return ResponseEntity.ok(payment);
     }
 
     @PostMapping
-    public ResponseEntity<PaymentDto> createPayment(@RequestBody PaymentDto paymentDto) {
-        PaymentDto createdPayment = paymentService.createPayment(paymentDto);
+    public ResponseEntity<Payment> createPayment(@RequestBody PaymentDto paymentDto) {
+        Payment createdPayment = paymentService.createPayment(paymentDto);
         return ResponseEntity.status(201).body(createdPayment);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PaymentDto> updatePayment(@PathVariable Long id, @RequestBody PaymentDto paymentDto) {
-        PaymentDto updatedPayment = paymentService.updatePayment(id, paymentDto);
+    public ResponseEntity<Payment> updatePayment(@PathVariable Long id, @RequestBody PaymentDto paymentDto) {
+        Payment updatedPayment = paymentService.updatePayment(id, paymentDto);
         return ResponseEntity.ok(updatedPayment);
     }
 

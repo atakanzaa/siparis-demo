@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 import tr.edu.ogu.ceng.Order.dto.PaymentDto;
+import tr.edu.ogu.ceng.Order.entity.Order;
 import tr.edu.ogu.ceng.Order.entity.Payment;
+import tr.edu.ogu.ceng.Order.entity.Notification.NotificationType;
 import tr.edu.ogu.ceng.Order.repository.PaymentRepository;
 
 import java.time.LocalDateTime;
@@ -16,71 +18,95 @@ public class PaymentService {
 
     private final PaymentRepository paymentRepository;
     private final RestClient restClient;
+    private final NotificationService notificationService;
+    private final OrderService orderService;
 
     // Create Payment
-    public PaymentDto createPayment(PaymentDto paymentDto) {
+    public Payment createPayment(PaymentDto paymentDto) {
+        // PaymentDto'yu Payment entity'sine dönüştürme
+        Payment payment = convertToEntity(paymentDto);
+
+        payment.setPaymentDate(LocalDateTime.now());
+        payment.setCreatedAt(LocalDateTime.now());
+        payment.setCreatedBy("system");
+
+        // Ödemeyi kaydetme
+        Payment savedPayment = paymentRepository.save(payment);
+
+        // Ödeme durumu kontrolü
+        if (savedPayment.getStatus().equals("COMPLETED")) {
+            // Sipariş onaylama
+            orderService.confirmOrder(savedPayment.getOrderId());
+
+            // Ödeme başarılı bildirim gönder
+            notificationService.sendNotification(
+                    "admin@example.com",  // Admin ya da ilgili kullanıcı
+                    "Ödeme tamamlandı: " + savedPayment.getAmount(),
+                    NotificationType.PAYMENT_SUCCESS
+            );
+        } else {
+            // Ödeme alınamadı bildirim gönder
+            notificationService.sendNotification(
+                    "admin@example.com",  // Admin ya da ilgili kullanıcı
+                    "Ödeme alınamadı: " + savedPayment.getAmount(),
+                    NotificationType.PAYMENT_FAILED
+            );
+        }
+
+        return savedPayment;
+    }
+    // DTO'dan Entity'ye dönüşüm metodu
+    private Payment convertToEntity(PaymentDto paymentDto) {
         Payment payment = new Payment();
         payment.setAmount(paymentDto.getAmount());
         payment.setPaymentMethod(paymentDto.getPaymentMethod());
         payment.setStatus(paymentDto.getStatus());
+        payment.setOrderId(paymentDto.getOrderId());  // Order ID'yi de alıyoruz
         payment.setPaymentDate(LocalDateTime.now());
         payment.setCreatedAt(LocalDateTime.now());
         payment.setCreatedBy("system");
-        payment.setVersion(1);
-
-        Payment savedPayment = paymentRepository.save(payment);
-        return convertToDto(savedPayment);
+        payment.setVersion(1);  // İlk versiyon
+        return payment;
     }
 
     // Update Payment
-    public PaymentDto updatePayment(Long id, PaymentDto paymentDto) {
+    public Payment updatePayment(Long id, PaymentDto payment) {
         Optional<Payment> existingPayment = paymentRepository.findById(id);
 
         if (!existingPayment.isPresent()) {
             throw new RuntimeException("Payment not found");
         }
 
-        Payment payment = existingPayment.get();
-        payment.setAmount(paymentDto.getAmount());
-        payment.setPaymentMethod(paymentDto.getPaymentMethod());
-        payment.setStatus(paymentDto.getStatus());
-        payment.setUpdatedAt(LocalDateTime.now());
-        payment.setUpdatedBy("system");
+        Payment updatedPayment = existingPayment.get();
+        updatedPayment.setAmount(payment.getAmount());
+        updatedPayment.setPaymentMethod(payment.getPaymentMethod());
+        updatedPayment.setStatus(payment.getStatus());
+        updatedPayment.setUpdatedAt(LocalDateTime.now());
+        updatedPayment.setUpdatedBy("system");
 
-        Payment updatedPayment = paymentRepository.save(payment);
-        return convertToDto(updatedPayment);
+        return paymentRepository.save(updatedPayment);
     }
 
     // Delete Payment
     public void deletePayment(Long id) {
-        if (!paymentRepository.existsById(id)) {
+        Optional<Payment> existingPayment = paymentRepository.findById(id);
+        if (!existingPayment.isPresent()) {
             throw new RuntimeException("Payment not found");
         }
-        paymentRepository.deleteById(id);
+
+        paymentRepository.delete(existingPayment.get());
     }
 
     // Get Payment by ID
-    public PaymentDto getPaymentById(Long id) {
-        Payment payment = paymentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Payment not found"));
-        return convertToDto(payment);
+    public Optional<Payment> getPaymentById(Long id) {
+        return paymentRepository.findById(id);
     }
 
-    // Convert Payment to DTO
-    private PaymentDto convertToDto(Payment payment) {
-        PaymentDto dto = new PaymentDto();
-        dto.setPaymentId(payment.getPaymentId());
-        dto.setPaymentDate(payment.getPaymentDate());
-        dto.setAmount(payment.getAmount());
-        dto.setPaymentMethod(payment.getPaymentMethod());
-        dto.setStatus(payment.getStatus());
-        dto.setCreatedAt(payment.getCreatedAt());
-        dto.setUpdatedAt(payment.getUpdatedAt());
-        dto.setDeletedAt(payment.getDeletedAt());
-        dto.setCreatedBy(payment.getCreatedBy());
-        dto.setUpdatedBy(payment.getUpdatedBy());
-        dto.setDeletedBy(payment.getDeletedBy());
-        dto.setVersion(payment.getVersion());
-        return dto;
+    // Sipariş Onaylama
+    private void confirmOrder(Long orderId) {
+        Optional<Order> orderOptional = orderService.confirmOrder(orderId);
+        if (!orderOptional.isPresent()) {
+            throw new RuntimeException("Sipariş onaylanırken bir hata oluştu");
+        }
     }
 }

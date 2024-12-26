@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 @Data
 public class PaymentDto {
     private Long paymentId;
+    private long orderId;
     private LocalDateTime paymentDate;
     private Double amount;
     private String paymentMethod;
